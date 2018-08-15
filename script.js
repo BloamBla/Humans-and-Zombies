@@ -11,50 +11,49 @@ Person.prototype.setName = function(newName) {
 }
 
 Person.prototype.getHealth = function() {
-	return this.health = Math.floor(Math.random * 100 + 1);
+	return this.health;
 }
 
 Person.prototype.changeHealth = function(newHealth) {
 	this.health = newHealth;
 }
 
-Person.prototype.isAlive = function() {
+Person.prototype.isAlive = function(health) {
 	if (this.health <= 0) {
 		return false;
-	} else true;
+	} else return true;
 }
 
-function Human(name, health) {
+function Human(name) {
 	Person.apply(this, arguments);
-	this.health = Math.floor((health * 31) + 10);
+	this.health = Math.floor((Math.random() * 31) + 10);
 }
 
 Human.prototype = Object.create(Person.prototype);
 Human.prototype.constructor = Human;
 
-function Zombie(name, health) {
-	Person.apply(this, arguments);
-	this.health = Math.floor((health * 101) + 100);
-}
-
 Human.prototype.getName = function() {
-	return this.name + " - Human";
+	Person.prototype.getName.apply(this, arguments);
+	return this.name = this.name + " - Human";
 }
 
-Zombie.prototype = Object.create(Person.prototype);
-Zombie.prototype.constructor = Zombie;
+function Zombie(name) {
+	Person.apply(this, arguments);
+	this.health = Math.floor((Math.random() * 101) + 100);
+}
 
 Zombie.prototype = Object.create(Person.prototype);
 Zombie.prototype.constructor = Zombie;
 
 Zombie.prototype.getName = function() {
-	return this.name + " - Zombie";
+	Person.prototype.getName.apply(this, arguments);
+	return this.name = this.name + " - Zombie";
 }
 
-var man1 = new Human('Игорь', Math.random());
-var man2 = new Human('Борис', Math.random());
-var man3 = new Human('Игнатий', Math.random());
+var man1 = new Human('Игорь');
+var man2 = new Human('Борис');
+var man3 = new Human('Игнатий');
 
-var zomb1 = new Zombie('Uarhg', Math.random());
-var zomb2 = new Zombie('Uiigh', Math.random());
-var zomb3 = new Zombie('Argh', Math.random());
+var zomb1 = new Zombie('Uarhg');
+var zomb2 = new Zombie('Uiigh');
+var zomb3 = new Zombie('Argh');
