@@ -15,13 +15,17 @@ Person.prototype.getHealth = function() {
 }
 
 Person.prototype.changeHealth = function(newHealth) {
-	this.health = newHealth;
+	if (this.health <= 0) {
+		try {
+			throw new Error('Здоровье ниже нуля! Его нельзя изменить!');
+		} catch (e) {
+			console.log(e.name + ': ' + e.message);
+		}
+	} else return this.health = newHealth;
 }
 
-Person.prototype.isAlive = function(health) {
-	if (this.health <= 0) {
-		return false;
-	} else return true;
+Person.prototype.isAlive = function() {
+	return this.health > 0;
 }
 
 function Human(name) {
@@ -33,8 +37,7 @@ Human.prototype = Object.create(Person.prototype);
 Human.prototype.constructor = Human;
 
 Human.prototype.getName = function() {
-	Person.prototype.getName.apply(this, arguments);
-	return this.name = this.name + " - Human";
+	return Person.prototype.getName.apply(this, arguments) + " - Human";
 }
 
 function Zombie(name) {
@@ -46,14 +49,5 @@ Zombie.prototype = Object.create(Person.prototype);
 Zombie.prototype.constructor = Zombie;
 
 Zombie.prototype.getName = function() {
-	Person.prototype.getName.apply(this, arguments);
-	return this.name = this.name + " - Zombie";
+	return Person.prototype.getName.apply(this, arguments) + " - Zombie";
 }
-
-var man1 = new Human('Игорь');
-var man2 = new Human('Борис');
-var man3 = new Human('Игнатий');
-
-var zomb1 = new Zombie('Uarhg');
-var zomb2 = new Zombie('Uiigh');
-var zomb3 = new Zombie('Argh');
